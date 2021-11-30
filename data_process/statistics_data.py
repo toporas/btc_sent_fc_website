@@ -5,7 +5,7 @@ import pandas as pd
 
 # pull data from google storage
 df = pd.read_csv(
-    "gcs://wagon-data-750-btc-sent-fc/raw_data/reddit_twitter_fin.csv",
+    "gcs://wagon-data-750-btc-sent-fc/input_data/input_data_1.csv",
     index_col='Unnamed: 0')
 
 # sort on date index and pull most recet 2 dates of dataframe
