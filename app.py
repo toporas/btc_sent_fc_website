@@ -16,6 +16,7 @@ if url == 'https://cloudsentiment-gijujv7fiq-ew.a.run.app/':
 # Add all your applications here
 app.add_app("💗 sentiment overview", sentiments.app)
 app.add_app("🚀 bitcoin transaction volume forecast", forecast.app)
-app.add_app("📚 about & methodology", methodology.app)
+app.add_app("📈 model performance", methodology.app)
+app.add_app("📚 methodology", methodology.app)
 # The main app
 app.run()
