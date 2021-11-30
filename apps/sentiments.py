@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from tweet_plgin import Tweet
 
 def app():
 
@@ -14,6 +17,30 @@ def app():
     col3.metric("Inflation", "50.0", "-10.25")
     col4.metric("Econ topic #3", "50.0", "-10.25")
     col5.metric("Econ topic #4", "50.0", "-10.25")
+
+    # most common words across the topics
+
+    st.header('**Most common keywords* of the day**')
+    st.write('**across all the topics listed above*')
+
+    # dummy input - will need some sort of dictionary that has the keywords and the counts
+    text = 'yolo, yolo, yolo, rocket, rocket, HODL, litecoin, inflation'
+
+    # Create and generate a word cloud image:
+    wordcloud = WordCloud(background_color='white', relative_scaling=1).generate_from_text(text)
+
+    # Display the generated image:
+    fig, ax = plt.subplots()
+
+    ax.imshow(wordcloud, interpolation='bilinear')
+    ax.axis("off")
+
+    st.pyplot(fig)
+
+    # Exemplary tweets:
+
+    st.header('**Relevant tweets**')
+    t = Tweet("https://twitter.com/elonmusk/status/1454876031232380928").component()
 
     # historic development of net sentiment indicators
 
