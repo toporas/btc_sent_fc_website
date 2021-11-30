@@ -11,7 +11,7 @@ df = pd.read_csv(
 # sort on date index and pull most recet 2 dates of dataframe
 df = df.sort_index(
     axis=0,
-    ascending=False).head()
+    ascending=False)
 
 
 #pull last today and yesterday sentiment for each topic in a dict
@@ -37,9 +37,3 @@ sentiment_topics_ui = ['Tweeter Econ Sentiment', 'Reddit Crypto Sentiment', 'Red
 
 topics_sentiments = get_topics_sentiment(sentiment_topics_data)
 ################################################################################
-
-
-
-
-
-print(df[sentiment_topics_data[0]])

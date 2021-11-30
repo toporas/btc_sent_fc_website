@@ -5,18 +5,26 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 from tweet_plgin import Tweet
 
-def app():
+#db connect / local imports
+from data_process.statistics_data import sentiment_topics_ui
+from data_process.statistics_data import topics_sentiments
+from data_process.statistics_data import df
+from data_process.statistics_data import sentiment_topics_data
 
+
+
+def app():
     # daily net sentiment indicators status
 
     st.header('**Net sentiment indicators***')
     st.write('*on a scale between -100 and 100*')
-    col1, col2, col3, col4, col5 = st.columns(5)
-    col1.metric("Bitcoin", "50.0", "-10.25")
-    col2.metric("Economy", "50.0", "-10.25")
-    col3.metric("Inflation", "50.0", "-10.25")
-    col4.metric("Econ topic #3", "50.0", "-10.25")
-    col5.metric("Econ topic #4", "50.0", "-10.25")
+
+    for i, col in enumerate(st.columns(len(sentiment_topics_ui))):
+        sent_today = topics_sentiments[i][0]
+        diff = round(
+            abs(topics_sentiments[i][0]) - abs(topics_sentiments[i][1]), 2)
+        col.metric(sentiment_topics_ui[i], str(sent_today), str(diff))
+
 
     # most common words across the topics
 
@@ -42,18 +50,26 @@ def app():
     st.header('**Relevant tweets**')
     t = Tweet("https://twitter.com/elonmusk/status/1454876031232380928").component()
 
+
     # historic development of net sentiment indicators
 
     st.header('**Historic development of net sentiment indicators**')
-
     st.write('Select the indicators you are interested in:')
-    option_1 = st.checkbox("Bitcoin")
-    option_2 = st.checkbox("Economy")
-    option_3 = st.checkbox("Inflation")
-    option_4 = st.checkbox("Econ topic #3")
-    option_5 = st.checkbox("Econ topic #4")
-    # IMPORTANT - still need to connect the checkboxes with the chart
 
-    chart_data = pd.DataFrame(np.random.randn(20, 5),columns=["Bitcoin", "Economy", "Inflation", "Econ topic #3", "Econ topic #4"])
+    sentiment_topics_dict = {
+        sentiment_topics_ui[i]: sentiment_topics_data[i]
+        for i in range(len(sentiment_topics_ui))
+    }
 
-    st.area_chart(chart_data)
+    for i, topic in enumerate(sentiment_topics_ui):
+
+        if st.checkbox(sentiment_topics_ui[i], value=True):
+            sentiment_topics_dict[sentiment_topics_ui[i]] = sentiment_topics_data[i]
+        else:
+            del sentiment_topics_dict[sentiment_topics_ui[i]]
+
+    # test with printing dict only
+    # st.write(sentiment_topics_dict)
+
+    st.line_chart(df[list(
+        sentiment_topics_dict.values())][0:30].apply(lambda x: x * 100))
