@@ -2,7 +2,6 @@ import gcsfs
 import pandas as pd
 
 
-
 # pull data from google storage
 df = pd.read_csv(
     "gcs://wagon-data-750-btc-sent-fc/input_data/input_data_1.csv",
