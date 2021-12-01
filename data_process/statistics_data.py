@@ -13,7 +13,6 @@ df = df.sort_index(
     axis=0,
     ascending=False)
 
-
 #pull last today and yesterday sentiment for each topic in a dict
 def get_topics_sentiment(sentiment_topics):  #get sentiment
     """ returns a list of lists with with today, yesterday sentiment values, on a scale -100 to 100 for each topic"""
@@ -25,8 +24,6 @@ def get_topics_sentiment(sentiment_topics):  #get sentiment
 
         topics_list.append([today_sent, yesterday_sent])
     return topics_list
-
-
 
 
 ################################################################################

@@ -5,6 +5,19 @@ import numpy as np
 def app():
 
     st.markdown("""
+        ## Project methodology
+
+        - Leveraged stock and bond market financial inputs as variables (see details below)
+        - Leveraged blockchain KPIs as variables (see details below)
+        - Scraped Twitter and Reddit to feed net sentiment analysis tools
+        - Leveraged pre-trained BERT NLP model to derive net sentiment out of tweets and reddit posts
+        - Fed suite of variables (financial, blockchain, net sentiment KPIs) to a timeseries RNN model
+        - Timeseries RNN model specs: two LSTM layers and two Dense layers
+        - Used Mean Absolute Error (MAE) as loss function and Mean Absolute Percentage Error (MAPE) as key metric
+
+    """)
+
+    st.markdown("""
         ## Model output (y variable)
         - Bitcoin trading gross volume
 
@@ -74,14 +87,5 @@ def app():
         - S&P U.S. TIPS 5-7 Year Index (USD)
         - S&P U.S. Treasury Bill 6-9 Month Index
 
-
-    """)
-
-    st.markdown("""
-        ## Project methodology
-
-        - Input 1
-        - Input 1
-        - Input 1
 
     """)

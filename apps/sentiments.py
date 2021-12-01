@@ -35,7 +35,7 @@ def app():
     text = 'yolo, yolo, yolo, rocket, rocket, HODL, litecoin, inflation'
 
     # Create and generate a word cloud image:
-    wordcloud = WordCloud(background_color='white', relative_scaling=1).generate_from_text(text)
+    wordcloud = WordCloud(background_color='white', relative_scaling=1, max_words=10).generate_from_text(text)
 
     # Display the generated image:
     fig, ax = plt.subplots()
