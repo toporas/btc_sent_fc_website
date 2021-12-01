@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import random
 
 from datetime import timedelta
 import requests
@@ -20,10 +18,11 @@ def app():
     delta_today = today - yesterday
 
     st.header('**Model prediction***')
-    st.write('*in USD billion*')
+    st.write('*in USD million*')
     col1, col2 = st.columns(2)
-    col1.metric("Yesterday (actual)", yesterday)
-    col2.metric("Today (prediction)", today, round(delta_today,2))
+    col1.metric("Yesterday (actual)", round(yesterday/1_000_000, 2))
+    col2.metric("Today (prediction)", round(today / 1_000_000, 2),
+                round(delta_today / 1_000_000, 2))
 
     st.header('**Prediction and recent actuals**')
     # here we need char_data to be a data frame which has two columns, actual and prediction.
@@ -37,6 +36,6 @@ def app():
     act_list = last_vol_days
     pred_list = [today,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
-    char_dict = {'Actuals': act_list, 'Prediction': pred_list}
+    char_dict = {'Past': act_list, 'Prediction': pred_list}
     chart_data = pd.DataFrame(char_dict)
     st.bar_chart(chart_data)
