@@ -1,17 +1,13 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from wordcloud import WordCloud
+from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
 from tweet_plgin import Tweet
+import gcsfs
 
 #db connect / local imports
-from data_process.statistics_data import sentiment_topics_ui
-from data_process.statistics_data import topics_sentiments
-from data_process.statistics_data import df
-from data_process.statistics_data import sentiment_topics_data
-
-
+from data_process.statistics_data import sentiment_topics_ui, topics_sentiments, df, sentiment_topics_data
 
 def app():
     # daily net sentiment indicators status
@@ -25,17 +21,24 @@ def app():
             abs(topics_sentiments[i][0]) - abs(topics_sentiments[i][1]), 2)
         col.metric(sentiment_topics_ui[i], str(sent_today), str(diff))
 
-
     # most common words across the topics
 
     st.header('**Most common keywords* of the day**')
     st.write('**across all the topics listed above*')
 
     # dummy input - will need some sort of dictionary that has the keywords and the counts
-    text = 'yolo, yolo, yolo, rocket, rocket, HODL, litecoin, inflation'
+    fs = gcsfs.GCSFileSystem()
+    with fs.open('wagon-data-750-btc-sent-fc/website_data/word_text_2021_11_22.txt') as f:
+        text = f.readlines()[0].decode()
+
+    #Custom stopwords
+    STOPWORDS.add('rt')
+    STOPWORDS.add('will')
+    STOPWORDS.add('price')
+    STOPWORDS.add('now')
 
     # Create and generate a word cloud image:
-    wordcloud = WordCloud(background_color='white', relative_scaling=1, max_words=10).generate_from_text(text)
+    wordcloud = WordCloud(background_color='white', max_words=15, stopwords=None).generate_from_text(text)
 
     # Display the generated image:
     fig, ax = plt.subplots()
